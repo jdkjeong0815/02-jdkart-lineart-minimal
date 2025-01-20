@@ -1,10 +1,23 @@
-// jdk - 2025sus 1
+// =============================================================================
+// 프로그램 : 02-jdkart-lineart-minimal
+// Created : 2024-Dec-24 ??? 확인 필요
+// 작가 : jdk                    Inspiration : 
+// Github : https://github.com/jdkjeong0815/02-jdkart-lineart-minimal
+// Web : https://jdkjeong0815.github.io/02-jdkart-lineart-minimal/
+// 작품 설명 : 
+// 라이브러리 기능 : jdklib.js
+// 주기적인 리로드 : 매  ??초
+// Last Update : 
+// 2024-Dec-24 
+//  - 1) 랜덤 타입 : 1) 컬러 팔레트  2) Shape 타입  3) 배경: 단색, 그라디언트
+//  - 2)  
+// 2025-Jan-19 
+//  - 1) 표준 포맷으로 수정
+//  - 2) 
+// =============================================================================
 
-// 매 10초마다 업데이트
-// 랜덤 타입
-// 1) 컬러 팔레트  2) Shape 타입  3) 배경: 단색, 그라디언트
-
-
+let saveFileName = "02-jdkart-lineart-minimal";
+let saveCanvas = "";
 let colors;
 let colorData;
 let shapeType;
@@ -14,7 +27,21 @@ function preload() {
   colorData = loadJSON("colors.json");
 }
 
+function touchStarted() {
+  // 첫 번째 터치: 풀스크린 활성화
+  let fs = fullscreen();
+  fullscreen(!fs);
+  
+  setTimeout(() => {
+    clear();
+    selectPalette();
+    redraw();
+  }, 2000);  //전체화면 리로드 전환 위해 2초로 설정
+  // return false; // 기본 터치 동작 방지
+}
+
 function setup() {
+  noScroll(); // 스크롤 금지. 스크롤바 생기는 것 방지
   //createCanvas(1040, 1040);
   createCanvas(windowWidth, windowHeight);
   colors = [];
@@ -22,28 +49,17 @@ function setup() {
   // Select a random set of colors from the JSON data
   selectPalette();
   draw();
-  // let keys = Object.keys(colorData);
-  // let randomKey = random(keys);
-  // console.log("Selected color set: " + randomKey); // Log the selected set
-  // colorData[randomKey].forEach(hex => {
-  //   let col = color(hex); // Convert hex to color
-  //   //col.setAlpha(128);  // Set alpha for transparency
-  //   colors.push(col);
-  // });
 
-  // 10초마다 업데이트
+  // 주기적인 리로드
   setInterval(() => {
     clear();
     selectPalette();
-   
     redraw();
-  }, 30000);
-
-  
+  }, 30000);  //30초마다 리로드
 }
 
 function selectPalette() {
-    // Select a random set of colors from the JSON data
+  // Select a random set of colors from the JSON data
   colors = [];
   let keys = Object.keys(colorData);
   let randomKey = random(keys);
@@ -60,9 +76,7 @@ function selectPalette() {
   } else {
     shapeType = "ellipse";
   }
-  
 }
-
 
 function draw() {
   let centerX = width / 2;
