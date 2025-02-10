@@ -71,7 +71,7 @@ function selectPalette() {
   });
   
   // 셰입 선택 - 라인 / 일립스 
-  if (random() < 0.5) { 
+  if (random() < 1) {  // 0.5 확률로 라인 또는 일립스 선택 
     shapeType = "line";
   } else {
     shapeType = "ellipse";
